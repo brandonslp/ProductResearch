@@ -19,6 +19,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".presentation.AddStoreActivity"
+            android:label="@string/title_activity_add_store"
+            android:parentActivityName=".presentation.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.brandonslp.productresearch.presentation.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

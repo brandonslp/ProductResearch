@@ -3,7 +3,10 @@ package com.brandonslp.productresearch.presentation;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -11,18 +14,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.brandonslp.productresearch.R;
+import com.brandonslp.productresearch.adapters.StoresAdapter;
 import com.brandonslp.productresearch.controller.Products_controller;
 import com.brandonslp.productresearch.controller.Stores_controller;
 import com.brandonslp.productresearch.model.Product;
 import com.brandonslp.productresearch.model.Store;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private Stores_controller storesController;
     private Products_controller productsController;
 
+    private RecyclerView recyclerView;
+    private StoresAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,17 +42,26 @@ public class MainActivity extends AppCompatActivity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        // Fill list
+        List<Store> stores = storesController.getAll();
+        adapter = new StoresAdapter(stores);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_stores);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            showStoreDialog();
             }
         });
 
-        test();
+        //test();
+    }
+
+    private void showStoreDialog() {
+
     }
 
     private void test() {

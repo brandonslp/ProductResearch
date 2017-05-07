@@ -50,6 +50,7 @@ public class ProductsAdapter extends
     public void onBindViewHolder(ProductsAdapter.ViewHolder viewHolder, int position) {
         Product product = mProducts.get(position);
         viewHolder.nameTextView.setText(product.getName());
+        viewHolder.priceTextView.setText(String.valueOf(product.getPrice()));
         viewHolder.price = product.getPrice();
         viewHolder.id = product.getId();
     }
@@ -73,7 +74,7 @@ public class ProductsAdapter extends
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        public TextView nameTextView;
+        public TextView nameTextView, priceTextView;
         double price;
         int id;
         // We also create a constructor that accepts the entire item row
@@ -83,6 +84,8 @@ public class ProductsAdapter extends
             // to access the context from any ViewHolder instance.
             super(itemView);
             nameTextView = (TextView) itemView.findViewById(R.id.item_product_name);
+            priceTextView = (TextView) itemView.findViewById(R.id.item_product_price);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

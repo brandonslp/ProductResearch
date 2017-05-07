@@ -6,6 +6,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -27,6 +29,7 @@ public class AddProductActivity extends AppCompatActivity {
     private Product mProduct;
     private Stores_controller storesController;
     private Products_controller productsController;
+    private boolean mCreateMenu;
 
 
     @Override
@@ -62,6 +65,7 @@ public class AddProductActivity extends AppCompatActivity {
         mName.setText(mProduct.getName());
         mPrice.setText(String.valueOf(mProduct.getPrice()));
         setTitle(mProduct.getName());
+        mCreateMenu = true;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +102,34 @@ public class AddProductActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        if (mCreateMenu)
+            getMenuInflater().inflate(R.menu.product, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_delete) {
+            Intent data = new Intent();
+            productsController.destroy(mProduct);
+            data.putExtra("position_extra", getIntent().getIntExtra("position_extra", -1));
+            setResult(400, data);
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

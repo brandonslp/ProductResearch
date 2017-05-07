@@ -84,7 +84,11 @@ public class StoreProductsActivity extends AppCompatActivity {
             // Modified product
             Product product = productsController.getById(data.getExtras().getInt("id_product_extra"));
             adapter.addProduct(product, data.getExtras().getInt("position_extra"));
-            adapter.notifyItemChanged(data.getExtras().getInt("position_extra"));
+            adapter.notifyItemChanged (data.getExtras().getInt("position_extra"));
+        } else if (resultCode == 400) {
+            // Delete product
+            adapter.delete(data.getExtras().getInt("position_extra"));
+            adapter.notifyItemRemoved(data.getExtras().getInt("position_extra"));
         }
     }
 

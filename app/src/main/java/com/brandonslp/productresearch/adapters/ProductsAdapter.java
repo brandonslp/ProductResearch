@@ -69,6 +69,10 @@ public class ProductsAdapter extends
         mProducts.set(position, product);
     }
 
+    public void delete(int position) {
+        mProducts.remove(position);
+    }
+
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
     public static class ViewHolder extends RecyclerView.ViewHolder {

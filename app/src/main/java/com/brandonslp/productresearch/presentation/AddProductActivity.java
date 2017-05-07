@@ -1,6 +1,5 @@
 package com.brandonslp.productresearch.presentation;
 
-import android.app.Instrumentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,33 +12,36 @@ import android.widget.Toast;
 
 import com.brandonslp.productresearch.R;
 
-public class AddStoreActivity extends AppCompatActivity {
-    private EditText mName, mAddress;
+public class AddProductActivity extends AppCompatActivity {
+
+    private EditText mName;
+    private EditText mPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_store);
+        setContentView(R.layout.activity_add_product);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mName = (EditText) findViewById(R.id.edit_name);
-        mAddress = (EditText) findViewById(R.id.edit_address);
+        mName = (EditText) findViewById(R.id.edit_name_product);
+        mPrice = (EditText) findViewById(R.id.edit_price);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!mName.getText().toString().trim().equals("") &&
-                        !mAddress.getText().toString().trim().equals("")) {
+                        !mPrice.getText().toString().trim().equals("")) {
                     Intent data = new Intent();
                     data.putExtra("name_extra", mName.getText().toString());
-                    data.putExtra("address_extra", mAddress.getText().toString());
+                    data.putExtra("price_extra", Double.parseDouble(mPrice.getText().toString()));
                     setResult(200, data);
                     onBackPressed();
                 } else {
-                    Toast.makeText(AddStoreActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddProductActivity.this, "Error", Toast.LENGTH_SHORT).show();
                 }
             }
         });

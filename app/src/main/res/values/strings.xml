@@ -2,4 +2,6 @@
     <string name="app_name">ProductResearch</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_add_store">AddStoreActivity</string>
+    <string name="title_activity_store_products">StoreProductsActivity</string>
+    <string name="title_activity_add_product">AddProductActivity</string>
 </resources>

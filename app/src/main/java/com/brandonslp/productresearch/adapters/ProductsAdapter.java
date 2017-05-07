@@ -9,31 +9,31 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.brandonslp.productresearch.R;
-import com.brandonslp.productresearch.model.Store;
-import com.brandonslp.productresearch.presentation.AddStoreActivity;
+import com.brandonslp.productresearch.model.Product;
 import com.brandonslp.productresearch.presentation.StoreProductsActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by antonio on 7/05/17.
  */
-public class StoresAdapter extends
-        RecyclerView.Adapter<StoresAdapter.ViewHolder> {
-    private List<Store> mStores;
+public class ProductsAdapter extends
+        RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
+    private List<Product> mProducts;
 
-    public StoresAdapter(List<Store> stores) {
-        mStores = stores;
+    public ProductsAdapter(List<Product> products) {
+        mProducts = products;
     }
 
     // Usually involves inflating a layout from XML and returning the holder
     @Override
-    public StoresAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ProductsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        View contactView = inflater.inflate(R.layout.item_store, parent, false);
+        View contactView = inflater.inflate(R.layout.item_product, parent, false);
 
         // Return a new holder instance
         ViewHolder viewHolder = new ViewHolder(contactView);
@@ -42,23 +42,20 @@ public class StoresAdapter extends
 
     // Involves populating data into the item through holder
     @Override
-    public void onBindViewHolder(StoresAdapter.ViewHolder viewHolder, int position) {
-        // Get the data model based on position
-        Store store = mStores.get(position);
-        viewHolder.storeId = store.getId();
-        // Set item views based on your views and data model
-        TextView textView = viewHolder.nameTextView;
-        textView.setText(store.getName());
+    public void onBindViewHolder(ProductsAdapter.ViewHolder viewHolder, int position) {
+        Product product = mProducts.get(position);
+
+        viewHolder.nameTextView.setText(product.getName());
     }
 
     // Returns the total count of items in the list
     @Override
     public int getItemCount() {
-        return mStores.size();
+        return mProducts.size();
     }
 
-    public void addStore(Store store) {
-        mStores.add(store);
+    public void addProduct(Product product) {
+        mProducts.add(product);
     }
 
     // Provide a direct reference to each of the views within a data item
@@ -67,7 +64,6 @@ public class StoresAdapter extends
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView nameTextView;
-        public int storeId;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -75,13 +71,11 @@ public class StoresAdapter extends
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-            nameTextView = (TextView) itemView.findViewById(R.id.item_store_name);
+            nameTextView = (TextView) itemView.findViewById(R.id.item_product_name);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(v.getContext(), StoreProductsActivity.class);
-                    i.putExtra("store_id_extra", storeId);
-                    v.getContext().startActivity(i);
+
                 }
             });
         }

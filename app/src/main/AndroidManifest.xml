@@ -28,6 +28,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.brandonslp.productresearch.presentation.MainActivity" />
         </activity>
+        <activity
+            android:name=".presentation.StoreProductsActivity"
+            android:label="@string/title_activity_store_products"
+            android:parentActivityName=".presentation.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.brandonslp.productresearch.presentation.MainActivity" />
+        </activity>
+        <activity
+            android:name=".presentation.AddProductActivity"
+            android:label="@string/title_activity_add_product"
+            android:parentActivityName=".presentation.StoreProductsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.brandonslp.productresearch.presentation.StoreProductsActivity" />
+        </activity>
     </application>
 
 </manifest>

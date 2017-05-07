@@ -1,5 +1,6 @@
 package com.brandonslp.productresearch.presentation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -53,15 +54,25 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            showStoreDialog();
+            startActivityForResult(new Intent(MainActivity.this, AddStoreActivity.class), 200);
             }
         });
-
-        //test();
     }
 
-    private void showStoreDialog() {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (resultCode == 200) {
+            Store store = new Store(
+                    data.getExtras().getString("name_extra"),
+                    data.getExtras().getString("address_extra"),
+                    null);
+            if (storesController.addStore(store)) {
+                adapter.addStore(store);
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 
     private void test() {

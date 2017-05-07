@@ -5,13 +5,23 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.brandonslp.productresearch.R;
+import com.brandonslp.productresearch.controller.Products_controller;
+import com.brandonslp.productresearch.controller.Stores_controller;
+import com.brandonslp.productresearch.model.Product;
+import com.brandonslp.productresearch.model.Store;
+
+import java.sql.SQLException;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Stores_controller storesController;
+    private Products_controller productsController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +29,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        try {
+            storesController = new Stores_controller(this);
+            productsController = new Products_controller(this);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -28,6 +44,35 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        test();
+    }
+
+    private void test() {
+            //addStore();
+            //addProduct();
+            show();
+    }
+
+    private void addStore() {
+        Store store = new Store("Ara",
+                                "Calle 123",null);
+        Log.v("Brandon-lp","add store -> "+storesController.addStore(store));
+    }
+
+    private void addProduct(){
+        Product p;
+        for (int i = 0; i < 5;i++){
+            p = new Product("Producto "+ i, 1000*i, storesController.getById(0));
+            Log.v("Brandon-lp","add Product -> "+productsController.addProduct(p));
+        }
+    }
+
+    private void show(){
+        Log.v("Brandon-lp","Store -> "+storesController.getById(1));
+        for (Product p: storesController.getById(1).getProducts()) {
+            Log.v("Brandon-lp","Producto -> "+ p.getId() +" Name -> "+p.getName() + " Store -> " + p.getStore().getName());
+        }
     }
 
     @Override

@@ -13,16 +13,16 @@ public class Store {
     @DatabaseField(columnName = "id", generatedId = true)
     private int id;
     @DatabaseField(columnName = "name")
-    private int name;
+    private String name;
     @DatabaseField(columnName = "address")
-    private int address;
+    private String address;
     @ForeignCollectionField
     private ForeignCollection<Product> products;
 
     public Store() {
     }
 
-    public Store(int name, int address, ForeignCollection<Product> products) {
+    public Store(String name, String address, ForeignCollection<Product> products) {
         this.name = name;
         this.address = address;
         this.products = products;
@@ -32,19 +32,19 @@ public class Store {
         return id;
     }
 
-    public int getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public int getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(int address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 

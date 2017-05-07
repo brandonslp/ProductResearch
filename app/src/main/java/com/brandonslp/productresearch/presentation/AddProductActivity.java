@@ -42,6 +42,12 @@ public class AddProductActivity extends AppCompatActivity {
         fab = (FloatingActionButton) findViewById(R.id.fab);
         mName = (EditText) findViewById(R.id.edit_name_product);
         mPrice = (EditText) findViewById(R.id.edit_price);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         try {
             storesController = new Stores_controller(this);

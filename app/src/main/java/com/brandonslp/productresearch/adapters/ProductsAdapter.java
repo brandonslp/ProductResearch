@@ -50,7 +50,7 @@ public class ProductsAdapter extends
     public void onBindViewHolder(ProductsAdapter.ViewHolder viewHolder, int position) {
         Product product = mProducts.get(position);
         viewHolder.nameTextView.setText(product.getName());
-        viewHolder.priceTextView.setText(String.valueOf(product.getPrice()));
+        viewHolder.priceTextView.setText("$"+String.valueOf(product.getPrice()));
         viewHolder.price = product.getPrice();
         viewHolder.id = product.getId();
     }

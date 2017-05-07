@@ -1,7 +1,10 @@
 <resources>
-    <string name="app_name">ProductResearch</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_add_store">AddStoreActivity</string>
-    <string name="title_activity_store_products">StoreProductsActivity</string>
-    <string name="title_activity_add_product">AddProductActivity</string>
+    <string name="app_name">Product Research</string>
+    <string name="action_settings">About us</string>
+    <string name="title_activity_add_store">Add store</string>
+    <string name="title_activity_store_products">Products</string>
+    <string name="title_activity_add_product">Add product</string>
+    <string name="title">About us</string>
+    <string name="content"><![CDATA[Brandon Lopez & Antonio Barandica]]></string>
+    <string name="disagree">Close</string>
 </resources>

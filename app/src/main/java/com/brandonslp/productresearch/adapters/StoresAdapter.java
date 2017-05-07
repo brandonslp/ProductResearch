@@ -40,18 +40,14 @@ public class StoresAdapter extends
         return viewHolder;
     }
 
-    // Involves populating data into the item through holder
     @Override
     public void onBindViewHolder(StoresAdapter.ViewHolder viewHolder, int position) {
-        // Get the data model based on position
         Store store = mStores.get(position);
         viewHolder.storeId = store.getId();
-        // Set item views based on your views and data model
-        TextView textView = viewHolder.nameTextView;
-        textView.setText(store.getName());
+        viewHolder.addressTextView.setText(store.getAddress());
+        viewHolder.nameTextView.setText(store.getName());
     }
 
-    // Returns the total count of items in the list
     @Override
     public int getItemCount() {
         return mStores.size();
@@ -66,7 +62,7 @@ public class StoresAdapter extends
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        public TextView nameTextView;
+        public TextView nameTextView, addressTextView;
         public int storeId;
 
         // We also create a constructor that accepts the entire item row
@@ -76,6 +72,7 @@ public class StoresAdapter extends
             // to access the context from any ViewHolder instance.
             super(itemView);
             nameTextView = (TextView) itemView.findViewById(R.id.item_store_name);
+            addressTextView = (TextView) itemView.findViewById(R.id.item_store_address);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

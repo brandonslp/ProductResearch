@@ -2,6 +2,7 @@ package com.brandonslp.productresearch.presentation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -40,7 +41,12 @@ public class StoreProductsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_store_products);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_products);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -51,7 +57,12 @@ public class StoreProductsActivity extends AppCompatActivity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        mStore = storesController.getById(getIntent().getExtras().getInt("store_id_extra"));
+        if (savedInstanceState != null)
+            mStore = storesController.getById(savedInstanceState.getInt("store_id_extra"));
+        else if (getIntent().hasExtra("store_id_extra"))
+            mStore = storesController.getById(getIntent().getExtras().getInt("store_id_extra"));
+        else
+            startActivity(new Intent(StoreProductsActivity.this, MainActivity.class));
         // Fill list
         ForeignCollection<Product> products = storesController.getById(mStore.getId()).getProducts();
         ArrayList productList= new ArrayList(products);
@@ -65,6 +76,12 @@ public class StoreProductsActivity extends AppCompatActivity {
                 startActivityForResult(new Intent(StoreProductsActivity.this, AddProductActivity.class), 200);
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putInt("store_id_extra",getIntent().getExtras().getInt("store_id_extra"));
     }
 
     @Override

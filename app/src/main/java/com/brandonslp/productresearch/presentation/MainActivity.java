@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.brandonslp.productresearch.R;
 import com.brandonslp.productresearch.adapters.StoresAdapter;
 import com.brandonslp.productresearch.controller.Products_controller;
@@ -27,7 +28,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private Stores_controller storesController;
-    private Products_controller productsController;
 
     private RecyclerView recyclerView;
     private StoresAdapter adapter;
@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         try {
             storesController = new Stores_controller(this);
-            productsController = new Products_controller(this);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -75,33 +74,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void test() {
-            //addStore();
-            //addProduct();
-            show();
-    }
-
-    private void addStore() {
-        Store store = new Store("Ara",
-                                "Calle 123",null);
-        Log.v("Brandon-lp","add store -> "+storesController.addStore(store));
-    }
-
-    private void addProduct(){
-        Product p;
-        for (int i = 0; i < 5;i++){
-            p = new Product("Producto "+ i, 1000*i, storesController.getById(0));
-            Log.v("Brandon-lp","add Product -> "+productsController.addProduct(p));
-        }
-    }
-
-    private void show(){
-        Log.v("Brandon-lp","Store -> "+storesController.getById(1));
-        for (Product p: storesController.getById(1).getProducts()) {
-            Log.v("Brandon-lp","Producto -> "+ p.getId() +" Name -> "+p.getName() + " Store -> " + p.getStore().getName());
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -118,6 +90,11 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            new MaterialDialog.Builder(this)
+                    .title(R.string.title)
+                    .content(R.string.content)
+                    .negativeText(R.string.disagree)
+                    .show();
             return true;
         }
 

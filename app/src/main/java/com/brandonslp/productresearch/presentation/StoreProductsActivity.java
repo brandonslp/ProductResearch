@@ -80,7 +80,17 @@ public class StoreProductsActivity extends AppCompatActivity {
                 adapter.addProduct(product);
                 adapter.notifyDataSetChanged();
             }
+        } else if (resultCode == 300) {
+            // Modified product
+            Product product = productsController.getById(data.getExtras().getInt("id_product_extra"));
+            adapter.addProduct(product, data.getExtras().getInt("position_extra"));
+            adapter.notifyItemChanged(data.getExtras().getInt("position_extra"));
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
 }

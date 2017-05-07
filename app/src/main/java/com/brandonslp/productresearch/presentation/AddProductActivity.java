@@ -11,11 +11,23 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.brandonslp.productresearch.R;
+import com.brandonslp.productresearch.controller.Products_controller;
+import com.brandonslp.productresearch.controller.Stores_controller;
+import com.brandonslp.productresearch.model.Product;
+
+import org.parceler.Parcels;
+
+import java.sql.SQLException;
 
 public class AddProductActivity extends AppCompatActivity {
 
     private EditText mName;
     private EditText mPrice;
+    private FloatingActionButton fab;
+    private Product mProduct;
+    private Stores_controller storesController;
+    private Products_controller productsController;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +36,53 @@ public class AddProductActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         mName = (EditText) findViewById(R.id.edit_name_product);
         mPrice = (EditText) findViewById(R.id.edit_price);
 
+        try {
+            storesController = new Stores_controller(this);
+            productsController = new Products_controller(this);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        if (getIntent().hasExtra("id_product_extra")) {
+            initEdit();
+        } else {
+            initAdd();
+        }
+
+    }
+
+    private void initEdit(){
+        final int id = getIntent().getIntExtra("id_product_extra", -1);
+        final int position = getIntent().getIntExtra("position_extra", -1);
+        mProduct = productsController.getById(id);
+        mName.setText(mProduct.getName());
+        mPrice.setText(String.valueOf(mProduct.getPrice()));
+        setTitle(mProduct.getName());
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!mName.getText().toString().trim().equals("") &&
+                        !mPrice.getText().toString().trim().equals("")) {
+                    mProduct.setName(mName.getText().toString());
+                    mProduct.setPrice(Double.parseDouble(mPrice.getText().toString()));
+                    productsController.update(mProduct);
+                    Intent data = new Intent();
+                    data.putExtra("position_extra", position);
+                    data.putExtra("id_product_extra", id);
+                    setResult(300, data);
+                    onBackPressed();
+                } else {
+                    Toast.makeText(AddProductActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void initAdd() {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
